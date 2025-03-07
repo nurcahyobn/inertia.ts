@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Electronics",
+    "slug": "electronics",
+    "description": "Electronics encompasses a vast range of devices that make our lives easier, from smartphones and laptops to home appliances. These products are designed to improve functionality and performance in both work and leisure activities.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 2,
+    "title": "Fashion",
+    "slug": "fashion",
+    "description": "Fashion is all about expressing individuality through clothing, accessories, and footwear. Whether you prefer casual or formal wear, fashion provides endless options to suit personal style, trends, and occasions.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 3,
+    "title": "Home & Kitchen",
+    "slug": "home-kitchen",
+    "description": "Home & Kitchen products help make daily life more convenient and enjoyable. From kitchen gadgets that simplify cooking to home decor that enhances ambiance, these items offer practical solutions and style for every home.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 4,
+    "title": "Beauty & Personal Care",
+    "slug": "beauty-personal-care",
+    "description": "Beauty and personal care products focus on improving appearance and enhancing self-care routines. Whether for skincare, haircare, or makeup, these items help individuals maintain their personal wellness and confidence.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 5,
+    "title": "Sports & Outdoors",
+    "slug": "sports-outdoors",
+    "description": "Sports & Outdoors products cater to active lifestyles, offering equipment for various sports activities and outdoor adventures. From camping gear to fitness equipment, these products support physical well-being and enjoyment of nature.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 6,
+    "title": "Toys & Games",
+    "slug": "toys-games",
+    "description": "Toys and games provide entertainment and educational value for children of all ages. These products foster creativity, learning, and play, whether through imaginative toys, puzzles, or interactive games for developing skills.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 7,
+    "title": "Automotive",
+    "slug": "automotive",
+    "description": "Automotive products enhance vehicle performance and safety. Whether looking for car parts, accessories, or tools, these items help keep cars running smoothly and ensure a safe and comfortable driving experience.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 8,
+    "title": "Books",
+    "slug": "books",
+    "description": "Books offer an endless world of knowledge, entertainment, and inspiration. From novels and biographies to academic texts, reading expands horizons and provides a means of escape, education, and personal growth.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 9,
+    "title": "Health & Wellness",
+    "slug": "health-wellness",
+    "description": "Health & Wellness products promote a balanced and healthy lifestyle. Whether through fitness supplements, wellness trackers, or self-care essentials, these products support physical and mental well-being.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  },
+  {
+    "id": 10,
+    "title": "Groceries",
+    "slug": "groceries",
+    "description": "Groceries are essential for daily living, offering everything from fresh produce to pantry staples. These items help maintain a well-stocked kitchen and ensure healthy, home-cooked meals are always within reach.",
+    "created_at": "2025-01-31T09:04:40.000000Z",
+    "updated_at": "2025-01-31T09:04:40.000000Z"
+  }
+]

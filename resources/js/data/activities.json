@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "type": "Order",
+    "message": "Customer 1 placed a new order.",
+    "timestamp": "2025-02-03T09:30:00Z",
+    "formatted_timestamp": "Feb 3, 2025, 9:30 AM",
+    "link": "/orders/12345",
+    "customer_id": 1,
+    "status": "Completed",
+    "category": "Order",
+    "action_taken": "Shipped"
+  },
+  {
+    "id": 2,
+    "type": "Product Update",
+    "message": "Product 'Laptop X' price updated to $999.99.",
+    "timestamp": "2025-02-02T15:20:00Z",
+    "formatted_timestamp": "Feb 2, 2025, 3:20 PM",
+    "link": "/products/1001",
+    "customer_id": 0,
+    "category": "Product Update"
+  },
+  {
+    "id": 3,
+    "type": "Customer Activity",
+    "message": "Customer 2 updated their shipping address.",
+    "timestamp": "2025-02-02T12:10:00Z",
+    "formatted_timestamp": "Feb 2, 2025, 12:10 PM",
+    "link": "/management/customers/2",
+    "customer_id": 2,
+    "category": "Customer Management"
+  },
+  {
+    "id": 4,
+    "type": "Discount Code Creation",
+    "message": "Created new discount code 'FEB25' with 25% off.",
+    "timestamp": "2025-02-01T10:50:00Z",
+    "formatted_timestamp": "Feb 1, 2025, 10:50 AM",
+    "link": "/more/discounts",
+    "customer_id": 0,
+    "category": "Discount",
+    "action_taken": "Active"
+  },
+  {
+    "id": 5,
+    "type": "Subscription Update",
+    "message": "Customer 3 upgraded to the 'Premium Plan' subscription.",
+    "timestamp": "2025-02-01T08:00:00Z",
+    "formatted_timestamp": "Feb 1, 2025, 8:00 AM",
+    "link": "/subscriptions/3",
+    "customer_id": 3,
+    "category": "Subscription",
+    "action_taken": "Upgraded"
+  },
+  {
+    "id": 6,
+    "type": "Shipping Update",
+    "message": "Order #12345 has been shipped via FedEx.",
+    "timestamp": "2025-01-31T17:45:00Z",
+    "formatted_timestamp": "Jan 31, 2025, 5:45 PM",
+    "link": "/orders/12345",
+    "customer_id": 1,
+    "category": "Shipping",
+    "action_taken": "Shipped"
+  }
+]

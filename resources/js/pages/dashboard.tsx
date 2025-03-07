@@ -1,4 +1,4 @@
-import AppLayout from "@/layouts/app-layout"
+import AppLayout from "@/layouts/app-layout-user"
 import type { PagePropsData } from "@/types"
 import { Head } from "@inertiajs/react"
 import { Card, Container } from "ui"

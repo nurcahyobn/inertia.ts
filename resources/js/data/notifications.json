@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "type": "order",
+    "message": "New order #10234 has been placed.",
+    "created_at": "2025-01-29T12:45:00Z",
+    "status": "unread",
+    "link": "/admin/orders/10234"
+  },
+  {
+    "id": 2,
+    "type": "stock",
+    "message": "Stock is low for 'iPhone 14 Pro'. Only 5 units left.",
+    "created_at": "2025-01-28T15:00:00Z",
+    "status": "unread",
+    "link": "/admin/products/iphone-14-pro"
+  },
+  {
+    "id": 3,
+    "type": "user",
+    "message": "New user registered: John Doe.",
+    "created_at": "2025-01-27T08:30:00Z",
+    "status": "read",
+    "link": "/admin/users/102"
+  },
+  {
+    "id": 4,
+    "type": "review",
+    "message": "A new review has been submitted for 'Nike Air Zoom Pegasus'.",
+    "created_at": "2025-01-26T18:15:00Z",
+    "status": "read",
+    "link": "/admin/reviews/567"
+  },
+  {
+    "id": 5,
+    "type": "return",
+    "message": "A return request has been initiated for order #10220.",
+    "created_at": "2025-01-25T09:00:00Z",
+    "status": "unread",
+    "link": "/admin/orders/10220/returns"
+  }
+]

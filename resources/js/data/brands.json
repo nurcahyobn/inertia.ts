@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Apple",
+    "slug": "apple",
+    "description": "Premium electronics and personal devices."
+  },
+  {
+    "id": 2,
+    "title": "Samsung",
+    "slug": "samsung",
+    "description": "Innovative electronics and home appliances."
+  },
+  {
+    "id": 3,
+    "title": "Nike",
+    "slug": "nike",
+    "description": "Sportswear and athletic footwear."
+  },
+  {
+    "id": 4,
+    "title": "Adidas",
+    "slug": "adidas",
+    "description": "Performance-oriented sportswear and gear."
+  },
+  {
+    "id": 5,
+    "title": "Sony",
+    "slug": "sony",
+    "description": "Entertainment, gaming, and electronic devices."
+  },
+  {
+    "id": 6,
+    "title": "Dyson",
+    "slug": "dyson",
+    "description": "High-end home appliances and vacuum cleaners."
+  },
+  {
+    "id": 7,
+    "title": "Bosch",
+    "slug": "bosch",
+    "description": "Reliable automotive and home appliances."
+  },
+  {
+    "id": 8,
+    "title": "Wilson",
+    "slug": "wilson",
+    "description": "Sports equipment and accessories."
+  },
+  {
+    "id": 9,
+    "title": "Michelin",
+    "slug": "michelin",
+    "description": "High-performance automotive tires."
+  },
+  {
+    "id": 10,
+    "title": "IKEA",
+    "slug": "ikea",
+    "description": "Affordable and stylish furniture solutions."
+  }
+]

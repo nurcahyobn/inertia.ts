@@ -1,31 +1,22 @@
-import { IconDeviceDesktop2, IconMoon, IconSun } from "justd-icons"
-import { Button, composeTailwindRenderProps } from "ui"
-import { useTheme } from "@/utils/use-theme"
+import { Button } from "@/components/ui"
+import { useTheme } from "@/providers/theme-provider"
+import { IconMoon, IconSun } from "justd-icons"
 
-export function ThemeSwitcher({
-  shape = "square",
-  appearance = "plain",
-  className,
-  ...props
-}: React.ComponentProps<typeof Button>) {
-  const { theme, updateTheme } = useTheme()
+interface Props {
+  appearance?: "plain" | "outline"
+}
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : theme === "dark" ? "system" : "light"
-    updateTheme(nextTheme)
-  }
-
+export function ThemeSwitcher({ appearance = "plain" }: Props) {
+  const { theme, setTheme } = useTheme()
   return (
     <Button
-      shape={shape}
-      appearance={appearance}
-      size="square-petite"
-      className={composeTailwindRenderProps(className, "**:data-[slot=icon]:text-fg")}
+      intent={appearance}
+      size="sq-md"
       aria-label="Switch theme"
-      onPress={toggleTheme}
-      {...props}
+      onPress={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {theme === "light" ? <IconSun /> : theme === "dark" ? <IconMoon /> : <IconDeviceDesktop2 />}
+      <IconSun className="transition-all scale-100 rotate-0 dark:scale-0 dark:-rotate-90 h-[1.2rem] w-[1.2rem]" />
+      <IconMoon className="absolute transition-all scale-0 rotate-90 dark:scale-100 dark:rotate-0 h-[1.2rem] w-[1.2rem]" />
     </Button>
   )
 }

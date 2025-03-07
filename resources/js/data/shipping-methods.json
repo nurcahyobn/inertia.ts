@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "name": "Standard Shipping",
+    "description": "Delivery within 5-7 business days",
+    "cost": 5.99,
+    "estimated_delivery_time": "5-7 business days",
+    "countries_available": ["US", "CA", "GB"],
+    "tracking_available": true
+  },
+  {
+    "id": 2,
+    "name": "Express Shipping",
+    "description": "Delivery within 2-3 business days",
+    "cost": 15.99,
+    "estimated_delivery_time": "2-3 business days",
+    "countries_available": ["US", "CA"],
+    "tracking_available": true
+  },
+  {
+    "id": 3,
+    "name": "Overnight Shipping",
+    "description": "Next day delivery",
+    "cost": 25.99,
+    "estimated_delivery_time": "1 business day",
+    "countries_available": ["US"],
+    "tracking_available": true
+  },
+  {
+    "id": 4,
+    "name": "International Shipping",
+    "description": "Delivery within 7-10 business days",
+    "cost": 25.99,
+    "estimated_delivery_time": "7-10 business days",
+    "countries_available": ["US", "CA", "GB", "AU", "DE", "IN"],
+    "tracking_available": false
+  },
+  {
+    "id": 5,
+    "name": "Same Day Shipping",
+    "description": "Same-day delivery for orders placed before 12 PM",
+    "cost": 35.99,
+    "estimated_delivery_time": "Same day",
+    "countries_available": ["US"],
+    "tracking_available": true
+  },
+  {
+    "id": 6,
+    "name": "Priority Shipping",
+    "description": "Faster than standard, usually within 3-5 business days",
+    "cost": 12.99,
+    "estimated_delivery_time": "3-5 business days",
+    "countries_available": ["US", "CA", "GB"],
+    "tracking_available": true
+  },
+  {
+    "id": 7,
+    "name": "Economy Shipping",
+    "description": "Cheaper option with longer delivery time",
+    "cost": 3.99,
+    "estimated_delivery_time": "10-14 business days",
+    "countries_available": ["US", "CA"],
+    "tracking_available": false
+  }
+]

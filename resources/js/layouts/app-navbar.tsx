@@ -1,4 +1,6 @@
+import { useTheme } from "@/providers/theme-provider"
 import { ThemeSwitcher } from "@/components/theme-switcher"
+
 import type { PagePropsData } from "@/types"
 import { usePage } from "@inertiajs/react"
 import {
@@ -15,7 +17,6 @@ import {
 import { useState, useEffect } from "react"
 import type { Selection } from "react-aria-components"
 import { Avatar, buttonStyles, Link, Menu, Navbar, Separator } from "ui"
-import { useTheme } from "@/utils/use-theme"
 
 const navigations = [
   {
@@ -117,7 +118,7 @@ export function AppNavbar({ children, ...props }: React.ComponentProps<typeof Na
             <>
               <Separator orientation="vertical" className="mr-2 h-6" />
               <Link
-                className={buttonStyles({ appearance: "outline", size: "small" })}
+                className={buttonStyles({ intent:"outline", size: "sm" })}
                 href={route("login")}
               >
                 Login
@@ -143,7 +144,7 @@ export function AppNavbar({ children, ...props }: React.ComponentProps<typeof Na
           ) : (
             <>
               <Link
-                className={buttonStyles({ appearance: "outline", size: "small", shape: "circle" })}
+                className={buttonStyles({ intent: "outline", size: "sm", shape: "circle" })}
                 href={route("login")}
               >
                 Login
@@ -160,7 +161,7 @@ export function AppNavbar({ children, ...props }: React.ComponentProps<typeof Na
 
 function UserMenu() {
   const { auth } = usePage<PagePropsData>().props
-  const { theme, updateTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const currentTheme = theme || "system"
   const [selectedTheme, setSelectedTheme] = useState<Selection>(new Set([currentTheme]))
   return (
@@ -202,7 +203,7 @@ function UserMenu() {
             onSelectionChange={(keys) => {
               setSelectedTheme(keys)
               // @ts-ignore
-              updateTheme(keys.has("system") ? "system" : keys.has("dark") ? "dark" : "light")
+              setTheme(keys.has("system") ? "system" : keys.has("dark") ? "dark" : "light")
             }}
             items={[
               { name: "Light", value: "light" },

@@ -1,110 +1,75 @@
-import {
-  Button as ButtonPrimitive,
-  type ButtonProps as ButtonPrimitiveProps,
-  composeRenderProps,
-} from "react-aria-components"
-import { tv } from "tailwind-variants"
-
-import { focusButtonStyles } from "./primitive"
+import type { ButtonProps as ButtonPrimitiveProps } from "react-aria-components"
+import { Button as ButtonPrimitive, composeRenderProps } from "react-aria-components"
+import { type VariantProps, tv } from "tailwind-variants"
 
 const buttonStyles = tv({
-  extend: focusButtonStyles,
   base: [
-    "kbt32x relative inline-flex items-center justify-center gap-x-2 border font-medium",
-    "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hovered:[--btn-icon:ButtonText]",
-    "*:data-[slot=icon]:-mx-0.5 data-hovered:*:data-[slot=icon]:text-current/90 data-pressed:*:data-[slot=icon]:text-current *:data-[slot=icon]:my-1 *:data-[slot=icon]:size-4 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-current/60 *:data-[slot=icon]:transition",
-    "*:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:my-1 *:data-[slot=avatar]:*:size-4 *:data-[slot=avatar]:size-4 *:data-[slot=avatar]:shrink-0",
+    "inline-flex items-center justify-center gap-x-2 text-center font-medium sm:text-sm",
+    "*:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:size-4",
+    "inset-ring inset-ring-(--btn-inset-ring) cursor-pointer outline-hidden [--btn-inset-ring:theme(--color-fg/15%)]",
+    "bg-(--btn-bg) text-(--btn-fg) outline-(--btn-outline)",
+    "*:data-[slot=icon]:-mx-0.5 [--btn-icon:theme(--color-fg/60%)] *:data-[slot=icon]:my-0.5 *:data-[slot=icon]:size-5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-(--btn-icon) sm:*:data-[slot=icon]:my-1 sm:*:data-[slot=icon]:size-4 forced-colors:[--btn-icon:ButtonText] forced-colors:data-hovered:[--btn-icon:ButtonText]",
+    "[--btn-hovered-bg:color-mix(in_oklab,var(--btn-bg)_95%,white_5%)] data-hovered:bg-(--btn-hovered-bg) data-hovered:*:data-[slot=icon]:text-current/90",
+    "data-focused:outline-(--btn-outline) data-focused:outline-1 data-focused:outline-offset-3 data-focused:ring-(--btn-ring) data-focused:ring-4 data-focused:ring-offset-3 data-focused:ring-offset-bg data-focused:*:data-[slot=icon]:text-current/90",
+    "[--btn-pressed-bg:color-mix(in_oklab,_var(--btn-bg)_85%,_transparent)] data-pressed:bg-(--btn-pressed-bg) data-pressed:outline-(--btn-outline) data-pressed:*:data-[slot=icon]:text-current",
+    "data-disabled:cursor-default data-disabled:opacity-50",
   ],
   variants: {
     intent: {
       primary: [
-        "outline-primary [--btn-bg:theme(--color-primary/95%)] [--btn-border:var(--color-primary)] [--btn-fg:var(--color-primary-fg)] dark:[--btn-bg:theme(--color-primary/90%)]",
-        "[--btn-bg-hovered:theme(--color-primary/87%)] [--btn-border-hovered:theme(--color-primary/87%)] dark:[--btn-bg-hovered:theme(--color-primary)] dark:[--btn-border-hovered:theme(--color-primary)]",
-        "inset-shadow-primary-fg/20 data-hovered:inset-shadow-primary-fg/25 data-pressed:inset-shadow-primary-fg/20",
+        "[--btn-bg:var(--color-primary)] [--btn-fg:var(--color-primary-fg)] [--btn-icon:color-mix(in_oklab,var(--color-primary)_40%,white_60%)] [--btn-outline:var(--color-primary)] [--btn-ring:theme(--color-primary/20%)]",
       ],
       secondary: [
-        "[--btn-bg:theme(--color-secondary/95%)] [--btn-border:theme(--color-secondary-fg/10%)] [--btn-fg:var(--color-secondary-fg)] dark:[--btn-bg:theme(--color-secondary/85%)] dark:[--btn-border:theme(--color-secondary-fg/7%)]",
-        "[--btn-bg-hovered:color-mix(in_oklab,var(--color-secondary)_60%,white_20%)] dark:[--btn-bg-hovered:color-mix(in_oklab,var(--color-secondary)_96%,white_4%)]",
-        "inset-shadow-white/15 data-hovered:inset-shadow-white/20 data-pressed:inset-shadow-white/15",
-      ],
-      warning: [
-        "[--btn-warning:theme(--color-warning/97%)]",
-        "[--btn-warning-hovered:color-mix(in_oklab,var(--color-warning)_85%,white_15%)]",
-        "dark:[--btn-warning-hovered:color-mix(in_oklab,var(--color-warning)_90%,white_10%)]",
-        "outline-warning [--btn-bg:var(--btn-warning)] [--btn-border:var(--btn-warning)] [--btn-fg:var(--color-warning-fg)]",
-        "[--btn-bg-hovered:var(--btn-warning-hovered)] [--btn-border-hovered:var(--btn-warning-hovered)]",
-        "inset-shadow-white/25 data-hovered:inset-shadow-white/30 data-pressed:inset-shadow-white/25",
+        "[--btn-bg:var(--color-secondary)] [--btn-fg:var(--color-secondary-fg)] [--btn-icon:color-mix(in_oklab,var(--color-secondary-fg)_40%,white_60%)] [--btn-outline:var(--color-secondary-fg)] [--btn-ring:theme(--color-secondary-fg/20%)]",
       ],
       danger: [
-        "outline-danger [--btn-bg:theme(--color-danger/95%)] [--btn-border:var(--color-danger)] [--btn-fg:var(--color-danger-fg)] dark:[--btn-bg:var(--color-danger)]",
-        "[--btn-danger-hovered:color-mix(in_oklab,var(--color-danger)_93%,white_7%)]",
-        "dark:[--btn-danger-hovered:color-mix(in_oklab,var(--color-danger)_96%,white_4%)]",
-        "[--btn-bg-hovered:var(--btn-danger-hovered)] [--btn-border-hovered:var(--btn-danger-hovered)]",
-        "inset-shadow-danger-fg/30 data-hovered:inset-shadow-danger-fg/35 data-pressed:inset-shadow-danger-fg/30",
+        "[--btn-bg:var(--color-danger)] [--btn-fg:var(--color-danger-fg)] [--btn-icon:color-mix(in_oklab,var(--color-danger)_40%,white_60%)] [--btn-outline:var(--color-danger)] [--btn-ring:theme(--color-danger/20%)]",
       ],
-    },
-    appearance: {
-      solid: [
-        "inset-ring-0 dark:inset-ring dark:border-0",
-        "inset-ring-(--btn-border) inset-shadow-2xs border-(--btn-border) bg-(--btn-bg) text-(--btn-fg)",
-        "data-hovered:bg-(--btn-bg-hovered) data-hovered:ring-(--btn-border-hovered)",
-        "data-pressed:border-(--btn-border) data-pressed:bg-(--btn-bg)",
+      warning: [
+        "[--btn-bg:var(--color-warning)] [--btn-fg:var(--color-warning-fg)] [--btn-icon:color-mix(in_oklab,var(--color-warning)_40%,black_40%)] [--btn-outline:var(--color-warning)] [--btn-ring:theme(--color-warning/20%)]",
       ],
-      outline: ["border data-hovered:bg-secondary data-pressed:bg-secondary"],
-      plain: ["border-transparent data-hovered:bg-secondary data-pressed:bg-secondary"],
+      outline: [
+        "[--btn-bg:transparent] [--btn-fg:var(--color-fg)] [--btn-hovered-bg:theme(--color-secondary)] [--btn-icon:color-mix(in_oklab,var(--color-secondary-fg)_60%,white_40%)] [--btn-inset-ring:var(--border)] [--btn-outline:var(--color-secondary-fg)] [--btn-pressed-bg:var(--color-secondary)] [--btn-ring:theme(--color-secondary-fg/20%)] data-hovered:[--btn-inset-ring:theme(--color-secondary-fg/10%)]",
+      ],
+      plain: [
+        "[--btn-bg:transparent] [--btn-fg:var(--color-fg)] [--btn-hovered-bg:var(--color-secondary)] [--btn-icon:color-mix(in_oklab,var(--color-secondary-fg)_60%,white_40%)] [--btn-inset-ring:none] [--btn-outline:transparent] [--btn-pressed-bg:var(--color-secondary)] [--btn-ring:theme(--color-secondary-fg/20%)] data-focus-visible:bg-(--btn-hovered-bg)",
+      ],
     },
     size: {
-      "extra-small":
-        "h-8 px-[calc(var(--spacing)*2.7)] text-xs/4 **:data-[slot=avatar]:*:size-3.5 **:data-[slot=avatar]:size-3.5 **:data-[slot=icon]:size-3 lg:text-[0.800rem]/4",
-      small: "h-9 px-3.5 text-sm/5 sm:text-sm/5",
-      medium: "h-10 px-4 text-base sm:text-sm/6",
-      large:
-        "h-11 px-4.5 text-base *:data-[slot=icon]:mx-[-1.5px] sm:*:data-[slot=icon]:size-5 lg:text-base/7",
-      "square-petite": "size-9 shrink-0",
+      "sq-2xs": "size-7",
+      "sq-xs": "size-8",
+      "sq-sm": "size-9",
+      "sq-md": "size-10",
+      "sq-lg": "size-11",
+      xs: "h-7 px-2",
+      sm: "h-9 px-3",
+      md: "h-10 px-4",
+      lg: "h-11 px-5",
     },
     shape: {
-      square: "rounded-lg",
+      square: "rounded-md",
       circle: "rounded-full",
-    },
-    isDisabled: {
-      false: "cursor-pointer forced-colors:data-disabled:text-[GrayText]",
-      true: "inset-shadow-none cursor-default border-0 opacity-50 ring-0 dark:inset-ring-0 forced-colors:data-disabled:text-[GrayText]",
-    },
-    isPending: {
-      true: "cursor-default opacity-50",
     },
   },
   defaultVariants: {
     intent: "primary",
-    appearance: "solid",
-    size: "medium",
+    size: "sm",
     shape: "square",
   },
 })
 
-interface ButtonProps extends ButtonPrimitiveProps {
-  intent?: "primary" | "secondary" | "danger" | "warning"
-  size?: "medium" | "large" | "square-petite" | "extra-small" | "small"
-  shape?: "square" | "circle"
-  appearance?: "solid" | "outline" | "plain"
-  ref?: React.Ref<HTMLButtonElement>
+interface ButtonProps extends VariantProps<typeof buttonStyles>, ButtonPrimitiveProps {
+  ref?: React.RefObject<HTMLButtonElement | null>
 }
 
-const Button = ({ className, intent, appearance, size, shape, ref, ...props }: ButtonProps) => {
+const Button = ({ intent, size, shape, className, ref, ...props }: ButtonProps) => {
   return (
     <ButtonPrimitive
       ref={ref}
-      {...props}
       className={composeRenderProps(className, (className, renderProps) =>
-        buttonStyles({
-          ...renderProps,
-          intent,
-          appearance,
-          size,
-          shape,
-          className,
-        }),
+        buttonStyles({ ...renderProps, intent, size, shape, className }),
       )}
+      {...props}
     >
       {(values) => (
         <>{typeof props.children === "function" ? props.children(values) : props.children}</>
@@ -113,5 +78,5 @@ const Button = ({ className, intent, appearance, size, shape, ref, ...props }: B
   )
 }
 
-export { Button, buttonStyles }
+export { Button, buttonStyles, ButtonPrimitive }
 export type { ButtonProps }

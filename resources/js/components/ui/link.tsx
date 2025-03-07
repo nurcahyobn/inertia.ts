@@ -43,5 +43,5 @@ const Link = ({ className, ref, ...props }: LinkProps) => {
   )
 }
 
-export { Link, linkStyles }
 export type { LinkProps }
+export { Link }

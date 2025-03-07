@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Standard Tax",
+    "rate": 7.5,
+    "region": "United States",
+    "type": "sales_tax",
+    "description": "Standard sales tax applied to most products."
+  },
+  {
+    "id": 2,
+    "name": "Reduced Tax",
+    "rate": 5.0,
+    "region": "United States",
+    "type": "sales_tax",
+    "description": "Reduced tax rate for essential goods like groceries."
+  },
+  {
+    "id": 3,
+    "name": "VAT",
+    "rate": 20.0,
+    "region": "European Union",
+    "type": "value_added_tax",
+    "description": "Standard VAT rate for most goods and services in the EU."
+  },
+  {
+    "id": 4,
+    "name": "GST",
+    "rate": 10.0,
+    "region": "Australia",
+    "type": "goods_and_services_tax",
+    "description": "Goods and Services Tax applied to most products in Australia."
+  },
+  {
+    "id": 5,
+    "name": "Exempt",
+    "rate": 0.0,
+    "region": "Global",
+    "type": "exempt",
+    "description": "Tax-exempt products or services."
+  }
+]
