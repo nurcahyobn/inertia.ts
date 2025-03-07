@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, use, useCallback, useEffect, useMemo, useState } from "react"
 
 import { cn } from "@/utils/classes"
@@ -307,13 +309,13 @@ const footer = tv({
     "**:data-[slot=menu-trigger]:relative **:data-[slot=menu-trigger]:overflow-hidden",
     " **:data-[slot=menu-trigger]:rounded-lg",
     "**:data-[slot=menu-trigger]:flex **:data-[slot=menu-trigger]:cursor-default **:data-[slot=menu-trigger]:items-center **:data-[slot=menu-trigger]:p-2 **:data-[slot=menu-trigger]:outline-hidden sm:**:data-[slot=menu-trigger]:text-sm",
-    "**:data-[slot=menu-trigger]:hover:bg-(--sidebar-accent) **:data-[slot=menu-trigger]:hover:text-fg",
+    "**:data-[slot=menu-trigger]:data-hovered:bg-(--sidebar-accent) **:data-[slot=menu-trigger]:data-hovered:text-fg",
   ],
   variants: {
     collapsed: {
       false: [
         "**:data-[slot=avatar]:*:size-8 **:data-[slot=menu-trigger]:**:data-[slot=avatar]:mr-2 **:data-[slot=avatar]:size-8",
-        "**:data-[slot=menu-trigger]:**:data-[slot=chevron]:ml-auto **:data-[slot=menu-trigger]:pressed:**:data-[slot=chevron]:rotate-180 **:data-[slot=menu-trigger]:**:data-[slot=chevron]:transition-transform **:data-[slot=menu-trigger]:w-full",
+        "**:data-[slot=menu-trigger]:**:data-[slot=chevron]:ml-auto **:data-[slot=menu-trigger]:**:data-[slot=chevron]:transition-transform **:data-[slot=menu-trigger]:w-full **:data-[slot=menu-trigger]:data-pressed:**:data-[slot=chevron]:rotate-180",
       ],
       true: [
         "**:data-[slot=avatar]:*:size-6 **:data-[slot=avatar]:size-6",
@@ -390,7 +392,7 @@ const sidebarItemStyles = tv({
     "group relative col-span-full cursor-pointer overflow-hidden rounded-lg px-[calc(var(--spacing)*2.3)] py-[calc(var(--spacing)*1.3)] text-sidebar-fg/70 outline-hidden sm:text-sm/6",
     "**:data-[slot=menu-trigger]:-mr-1 **:data-[slot=menu-trigger]:absolute **:data-[slot=menu-trigger]:right-0 **:data-[slot=menu-trigger]:flex **:data-[slot=menu-trigger]:h-full **:data-[slot=menu-trigger]:w-[calc(var(--sidebar-width)-90%)] **:data-[slot=menu-trigger]:items-center **:data-[slot=menu-trigger]:justify-end **:data-[slot=menu-trigger]:pr-2.5",
     "**:data-[slot=avatar]:*:size-4 **:data-[slot=avatar]:size-4 **:data-[slot=icon]:size-4 **:data-[slot=avatar]:shrink-0 **:data-[slot=icon]:shrink-0",
-    "in-data-[sidebar-intent=fleet]:rounded-none",
+    "in-data-[sidebar-intent=fleet]:rounded-none [--sidebar-current:var(--primary)]",
   ],
   variants: {
     collapsed: {
@@ -399,7 +401,7 @@ const sidebarItemStyles = tv({
       true: "flex not-has-data-[slot=icon]:hidden size-9 items-center justify-center gap-x-0 p-0 **:data-[slot=menu-trigger]:hidden",
     },
     isCurrent: {
-      true: "bg-(--sidebar-accent) text-fg hover:bg-(--sidebar-accent)/90 hover:text-fg **:data-[slot=menu-trigger]:from-(--sidebar-accent) **:data-[slot=icon]:text-fg [&_.text-muted-fg]:text-fg/80",
+      true: "font-medium text-(--sidebar-current) data-hovered:bg-(--sidebar-current)/10 data-hovered:text-(--sidebar-current)",
     },
     isActive: {
       true: "bg-(--sidebar-accent) text-sidebar-fg **:data-[slot=menu-trigger]:flex",
@@ -504,6 +506,7 @@ const sidebarLink = tv({
 interface SidebarLinkProps extends LinkProps {
   ref?: React.Ref<HTMLAnchorElement>
 }
+
 const SidebarLink = ({ className, ref, ...props }: SidebarLinkProps) => {
   const { state, isMobile } = useSidebar()
   const collapsed = state === "collapsed" && !isMobile
@@ -556,6 +559,7 @@ const SidebarDisclosureGroup = ({
 interface SidebarDisclosureProps extends DisclosureProps {
   ref?: React.Ref<HTMLDivElement>
 }
+
 const SidebarDisclosure = ({ className, ref, ...props }: SidebarDisclosureProps) => {
   const { state } = useSidebar()
   return (
@@ -593,6 +597,7 @@ const sidebarDisclosureTrigger = tv({
 interface SidebarDisclosureTriggerProps extends ButtonProps {
   ref?: React.Ref<HTMLButtonElement>
 }
+
 const SidebarDisclosureTrigger = ({ className, ref, ...props }: SidebarDisclosureTriggerProps) => {
   const { state, isMobile } = useSidebar()
   const collapsed = state === "collapsed" && !isMobile
@@ -656,8 +661,8 @@ const SidebarTrigger = ({ onPress, children, ...props }: React.ComponentProps<ty
     <Button
       aria-label={props["aria-label"] || "Toggle Sidebar"}
       data-sidebar-trigger="true"
-      intent={props.intent || "plain"}
-      size={props.size || "sq-md"}
+      intent={props.intent || "outline"}
+      size={props.size || "sq-sm"}
       onPress={(event) => {
         onPress?.(event)
         toggleSidebar()
@@ -687,7 +692,7 @@ const SidebarRail = ({ className, ref, ...props }: React.ComponentProps<"button"
       tabIndex={-1}
       onClick={toggleSidebar}
       className={cn(
-        "-translate-x-1/2 group-data-[sidebar-side=left]/sidebar-container:-right-4 absolute inset-y-0 z-20 hidden w-4 outline-hidden transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-transparent group-data-[sidebar-side=right]/sidebar-container:left-0 sm:flex",
+        "-translate-x-1/2 group-data-[sidebar-side=left]/sidebar-container:-right-4 absolute inset-y-0 z-20 hidden w-4 outline-hidden transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] data-hovered:after:bg-transparent group-data-[sidebar-side=right]/sidebar-container:left-0 sm:flex",
         "in-data-[sidebar-side=left]:cursor-w-resize in-data-[sidebar-side=right]:cursor-e-resize",
         "[[data-sidebar-side=left][data-sidebar-state=collapsed]_&]:cursor-e-resize [[data-sidebar-side=right][data-sidebar-state=collapsed]_&]:cursor-w-resize",
         "group-data-[sidebar-collapsible=hidden]/sidebar-container:translate-x-0 group-data-[sidebar-collapsible=hidden]/sidebar-container:hover:bg-secondary group-data-[sidebar-collapsible=hidden]/sidebar-container:after:left-full",

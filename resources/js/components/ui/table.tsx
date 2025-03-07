@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import { IconChevronLgDown, IconHamburger } from "justd-icons"
@@ -18,8 +20,8 @@ import {
   ColumnResizer as ColumnResizerPrimitive,
   ResizableTableContainer,
   Row,
-  TableBody as TableBodyPrimitive,
-  TableHeader as TableHeaderPrimitive,
+  TableBody,
+  TableHeader,
   Table as TablePrimitive,
   composeRenderProps,
   useTableOptions,
@@ -31,9 +33,9 @@ import { Checkbox } from "./checkbox"
 
 const table = tv({
   slots: {
-    root: "table w-full min-w-full caption-bottom border-spacing-0 text-sm outline-hidden [--table-selected-bg:color-mix(in_oklab,var(--color-primary)_5%,white_90%)] **:data-drop-target:border **:data-drop-target:border-primary dark:[--table-selected-bg:color-mix(in_oklab,var(--color-primary)_25%,black_70%)]",
-    header: "x32 border-b",
-    row: "tr group relative cursor-default border-b bg-bg selected:bg-(--table-selected-bg) text-muted-fg outline-hidden ring-primary selected:hover:bg-(--table-selected-bg)/70 data-focus-visible:ring-1 data-focused:ring-0 dark:selected:hover:bg-[color-mix(in_oklab,var(--color-primary)_30%,black_70%)]",
+    root: "table w-full min-w-full caption-bottom border-spacing-0 text-sm outline-hidden [--table-selected-bg:color-mix(in_oklab,var(--color-primary)_7%,white_93%)] **:data-drop-target:border **:data-drop-target:border-primary dark:[--table-selected-bg:color-mix(in_oklab,var(--color-primary)_25%,black_70%)]",
+    header: "x32 border-b bg-muted/50 font-mono text-xs uppercase",
+    row: "tr group relative cursor-default border-b bg-bg text-muted-fg outline-hidden ring-primary data-selected:data-hovered:bg-(--table-selected-bg)/70 data-selected:bg-(--table-selected-bg) data-focus-visible:ring-1 data-focused:ring-0 dark:data-selected:data-hovered:bg-[color-mix(in_oklab,var(--color-primary)_30%,black_70%)]",
     cellIcon:
       "grid size-[1.15rem] flex-none shrink-0 place-content-center rounded bg-secondary text-fg *:data-[slot=icon]:size-3.5 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:transition-transform *:data-[slot=icon]:duration-200",
     columnResizer: [
@@ -56,20 +58,32 @@ const TableContext = React.createContext<TableProps>({
 
 const useTableContext = () => React.useContext(TableContext)
 
-const Table = ({ children, className, ...props }: TableProps) => (
+const Table = ({
+  children,
+  className,
+  fleet = true,
+  ...props
+}: TableProps & { fleet?: boolean }) => (
   <TableContext.Provider value={props}>
-    <div className="relative w-full overflow-auto">
-      {props.allowResize ? (
-        <ResizableTableContainer className="overflow-auto">
+    <div
+      className={cn(
+        fleet &&
+          "-mx-(--inset-padding) **:[td]:first:pl-(--inset-padding) **:[th]:first:pl-(--inset-padding)",
+      )}
+    >
+      <div className="relative w-full overflow-auto">
+        {props.allowResize ? (
+          <ResizableTableContainer className="overflow-auto">
+            <TablePrimitive {...props} className={root({ className })}>
+              {children}
+            </TablePrimitive>
+          </ResizableTableContainer>
+        ) : (
           <TablePrimitive {...props} className={root({ className })}>
             {children}
           </TablePrimitive>
-        </ResizableTableContainer>
-      ) : (
-        <TablePrimitive {...props} className={root({ className })}>
-          {children}
-        </TablePrimitive>
-      )}
+        )}
+      </div>
     </div>
   </TableContext.Provider>
 )
@@ -88,12 +102,8 @@ const ColumnResizer = ({ className, ...props }: ColumnResizerProps) => (
   </ColumnResizerPrimitive>
 )
 
-const TableBody = <T extends object>(props: TableBodyProps<T>) => (
-  <TableBodyPrimitive
-    data-slot="table-body"
-    {...props}
-    className={cn("[&_.tr:last-child]:border-0")}
-  />
+const Body = <T extends object>(props: TableBodyProps<T>) => (
+  <TableBody data-slot="table-body" {...props} className={cn("[&_.tr:last-child]:border-0")} />
 )
 
 interface TableCellProps extends CellProps {
@@ -163,7 +173,7 @@ interface TableHeaderProps<T extends object> extends HeaderProps<T> {
   ref?: React.Ref<HTMLTableSectionElement>
 }
 
-const TableHeader = <T extends object>({
+const Header = <T extends object>({
   children,
   ref,
   className,
@@ -172,12 +182,7 @@ const TableHeader = <T extends object>({
 }: TableHeaderProps<T>) => {
   const { selectionBehavior, selectionMode, allowsDragging } = useTableOptions()
   return (
-    <TableHeaderPrimitive
-      data-slot="table-header"
-      ref={ref}
-      className={header({ className })}
-      {...props}
-    >
+    <TableHeader data-slot="table-header" ref={ref} className={header({ className })} {...props}>
       {allowsDragging && <Column className="w-0" />}
       {selectionBehavior === "toggle" && (
         <Column className="w-0 pl-4">
@@ -185,7 +190,7 @@ const TableHeader = <T extends object>({
         </Column>
       )}
       <Collection items={columns}>{children}</Collection>
-    </TableHeaderPrimitive>
+    </TableHeader>
   )
 }
 
@@ -212,14 +217,17 @@ const TableRow = <T extends object>({
       className={row({
         className:
           "href" in props
-            ? cn("cursor-pointer hover:bg-secondary/50 hover:text-secondary-fg", className)
+            ? cn(
+                "cursor-pointer data-hovered:bg-secondary/50 data-hovered:text-secondary-fg",
+                className,
+              )
             : "",
       })}
     >
       {allowsDragging && (
         <Cell className="group cursor-grab pr-0 ring-primary data-dragging:cursor-grabbing">
           <Button
-            className="relative bg-transparent py-1.5 pl-3.5 pressed:text-fg text-muted-fg"
+            className="relative bg-transparent py-1.5 pl-3.5 text-muted-fg data-pressed:text-fg"
             slot="drag"
           >
             <IconHamburger />
@@ -230,7 +238,7 @@ const TableRow = <T extends object>({
         <Cell className="pl-4">
           <span
             aria-hidden
-            className="absolute inset-y-0 left-0 hidden h-full w-0.5 bg-primary group-selected:block"
+            className="absolute inset-y-0 left-0 hidden h-full w-0.5 bg-primary group-data-selected:block"
           />
           <Checkbox slot="selection" />
         </Cell>
@@ -240,10 +248,10 @@ const TableRow = <T extends object>({
   )
 }
 
-Table.Body = TableBody
+Table.Body = Body
 Table.Cell = TableCell
 Table.Column = TableColumn
-Table.Header = TableHeader
+Table.Header = Header
 Table.Row = TableRow
 
 export type { TableProps, TableBodyProps, TableCellProps, TableColumnProps, TableRowProps }

@@ -1,3 +1,5 @@
+"use client"
+
 import {
   IconChevronLgLeft,
   IconChevronLgRight,
@@ -15,7 +17,7 @@ import {
 } from "react-aria-components"
 
 import { cn } from "@/utils/classes"
-import { tv } from "tailwind-variants"
+import { type VariantProps, tv } from "tailwind-variants"
 import { buttonStyles } from "./button"
 
 const paginationStyles = tv({
@@ -24,14 +26,14 @@ const paginationStyles = tv({
     section: "flex h-9 gap-[5px]",
     list: "flex flex-row items-center gap-[5px]",
     itemButton:
-      "cursor-pointer font-normal text-fg data-focus-visible:border-primary data-focus-visible:bg-primary/10 data-focus-visible:ring-4 data-focus-visible:ring-primary/20",
+      "min-w-9 cursor-pointer font-normal text-fg data-focus-visible:border-primary data-focus-visible:bg-primary/10 data-focus-visible:ring-4 data-focus-visible:ring-primary/20",
     itemLabel: "grid h-9 place-content-center px-3.5 tabular-nums",
     itemSeparator: "grid h-9 place-content-center",
     itemEllipsis:
       "flex size-9 items-center justify-center rounded-lg border border-transparent data-focus-visible:border-primary data-focus-visible:bg-primary/10 data-focused:outline-hidden data-focus-visible:ring-4 data-focus-visible:ring-primary/20",
     itemEllipsisIcon: "flex size-9 items-center justify-center",
     defaultItem:
-      "cursor-pointer font-normal tabular-nums disabled:cursor-default disabled:opacity-100 data-focus-visible:border-primary data-focus-visible:bg-primary/10 data-focus-visible:ring-4 data-focus-visible:ring-primary/20",
+      "min-w-10 cursor-pointer font-normal tabular-nums disabled:cursor-default disabled:opacity-100 data-focus-visible:border-primary data-focus-visible:bg-primary/10 data-focus-visible:ring-4 data-focus-visible:ring-primary/20",
     itemSeparatorLine: "h-5 w-[1.5px] shrink-0 rotate-[14deg] bg-secondary-fg/40",
   },
 })
@@ -49,8 +51,8 @@ const {
   itemSeparatorLine,
 } = paginationStyles()
 
-type PaginationProps = React.ComponentProps<"nav">
-const Pagination = ({ className, ref, ...props }: PaginationProps) => (
+type PagginationProps = React.ComponentProps<"nav">
+const Pagination = ({ className, ref, ...props }: PagginationProps) => (
   <nav aria-label="pagination" ref={ref} className={pagination({ className })} {...props} />
 )
 
@@ -68,7 +70,7 @@ const PaginationSection = <T extends object>({
 interface PaginationListProps<T> extends ListBoxProps<T> {
   ref?: React.RefObject<HTMLDivElement>
 }
-const PaginationList = <T extends object>({ className, ref, ...props }: PaginationListProps<T>) => {
+const List = <T extends object>({ className, ref, ...props }: PaginationListProps<T>) => {
   return (
     <ListBox
       ref={ref}
@@ -91,20 +93,17 @@ const renderListItem = (
   children: React.ReactNode,
 ) => <ListBoxItem {...props}>{children}</ListBoxItem>
 
-interface PaginationItemProps extends ListBoxItemProps {
+interface PaginationItemProps extends ListBoxItemProps, VariantProps<typeof buttonStyles> {
   children?: React.ReactNode
   className?: string
-  intent?: "primary" | "secondary" | "outline" | "plain"
-  size?: "medium" | "large" | "square-petite" | "extra-small" | "small"
-  shape?: "square" | "circle"
   isCurrent?: boolean
   segment?: "label" | "separator" | "ellipsis" | "default" | "last" | "first" | "previous" | "next"
 }
 
-const PaginationItem = ({
+const Item = ({
   segment = "default",
-  size = "small",
-  intent = "outline",
+  size = "sm",
+  intent,
   className,
   isCurrent,
   children,
@@ -125,7 +124,7 @@ const PaginationItem = ({
         isDisabled: isCurrent,
         className: cn(
           buttonStyles({
-            intent: "outline",
+            intent: "plain",
             size: "sm",
             className: itemButton(),
           }),
@@ -179,11 +178,10 @@ const PaginationItem = ({
         {
           textValue: textValue,
           "aria-current": isCurrent ? "page" : undefined,
-          isDisabled: isCurrent,
           className: cn(
             buttonStyles({
-              intent: isCurrent ? "primary" : intent,
-              size:"md",
+              intent: isCurrent ? "outline" : "plain",
+              size,
               className: defaultItem({ className }),
             }),
             className,
@@ -195,9 +193,9 @@ const PaginationItem = ({
   }
 }
 
-Pagination.Item = PaginationItem
-Pagination.List = PaginationList
+Pagination.Item = Item
+Pagination.List = List
 Pagination.Section = PaginationSection
 
-export type { PaginationProps, PaginationListProps, PaginationSectionProps, PaginationItemProps }
+export type { PagginationProps, PaginationListProps, PaginationSectionProps, PaginationItemProps }
 export { Pagination }

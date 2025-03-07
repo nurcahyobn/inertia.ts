@@ -1,3 +1,5 @@
+"use client"
+
 import {
   DateField as DateFieldPrimitive,
   type DateFieldProps as DateFieldPrimitiveProps,
@@ -34,19 +36,9 @@ const DateField = <T extends DateValue>({
     >
       {label && <Label>{label}</Label>}
       <FieldGroup>
-        {prefix && typeof prefix === "string" ? (
-          <span className="ml-2 text-muted-fg">{prefix}</span>
-        ) : (
-          prefix
-        )}
+        {prefix ? <span data-slot="prefix">{prefix}</span> : null}
         <DateInput />
-        {suffix ? (
-          typeof suffix === "string" ? (
-            <span className="mr-2 text-muted-fg">{suffix}</span>
-          ) : (
-            suffix
-          )
-        ) : null}
+        {suffix ? <span data-slot="suffix">{suffix}</span> : null}
       </FieldGroup>
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
@@ -55,7 +47,7 @@ const DateField = <T extends DateValue>({
 }
 
 const segmentStyles = tv({
-  base: "inline shrink-0 rounded p-0.5 type-literal:px-0 text-fg tabular-nums tracking-wider caret-transparent outline-0 forced-color-adjust-none sm:text-sm forced-colors:text-[ButtonText]",
+  base: "inline shrink-0 rounded p-0.5 type-literal:px-0 text-fg tabular-nums tracking-wider caret-transparent outline outline-0 forced-color-adjust-none sm:text-sm sm:uppercase forced-colors:text-[ButtonText]",
   variants: {
     isPlaceholder: {
       true: "text-muted-fg",
@@ -65,7 +57,7 @@ const segmentStyles = tv({
     },
     isFocused: {
       true: [
-        "bg-accent text-accent-fg forced-colors:bg-[Highlight] forced-colors:text-[HighlightText]",
+        "bg-primary text-primary-fg forced-colors:bg-[Highlight] forced-colors:text-[HighlightText]",
         "data-invalid:bg-danger data-invalid:text-danger-fg",
       ],
     },
@@ -77,7 +69,7 @@ const DateInput = ({ className, ...props }: Omit<DateInputProps, "children">) =>
     <DateInputPrimitive
       className={composeTailwindRenderProps(
         className,
-        "bg-transparent p-2 text-base text-fg placeholder-muted-fg",
+        "bg-transparent p-2 text-base text-fg placeholder-muted-fg sm:text-sm",
       )}
       {...props}
     >

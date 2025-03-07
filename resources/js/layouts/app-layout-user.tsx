@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider } from "ui"
 import { AppSidebarNav } from "./app-sidebar-nav"
-import {AppSidebar} from "./app-sidebar"
+import AppSidebar from "./app-sidebar"
 import { FlashMessage } from "@/components/flash-message"
 import type { PropsWithChildren } from "react"
 

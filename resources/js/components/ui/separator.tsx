@@ -1,3 +1,5 @@
+"use client"
+
 import { Separator as Divider, type SeparatorProps as DividerProps } from "react-aria-components"
 import { tv } from "tailwind-variants"
 

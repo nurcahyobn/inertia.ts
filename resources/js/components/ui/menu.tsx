@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, use } from "react"
 
 import { IconBulletFill, IconCheck, IconChevronLgRight } from "justd-icons"
@@ -13,9 +15,9 @@ import {
   Button,
   Collection,
   Header,
-  MenuItem as MenuItemPrimitive,
+  MenuItem,
   Menu as MenuPrimitive,
-  MenuSection as MenuSectionPrimitive,
+  MenuSection,
   MenuTrigger as MenuTriggerPrimitive,
   SubmenuTrigger as SubmenuTriggerPrimitive,
   composeRenderProps,
@@ -32,7 +34,7 @@ import {
   dropdownItemStyles,
   dropdownSectionStyles,
 } from "./dropdown"
-import { PopoverContent } from "./popover"
+import { Popover } from "./popover"
 
 interface MenuContextProps {
   respectScreen: boolean
@@ -52,7 +54,7 @@ const Menu = ({ respectScreen = true, ...props }: MenuProps) => {
   )
 }
 
-const MenuSubMenu = ({ delay = 0, ...props }) => (
+const SubMenu = ({ delay = 0, ...props }) => (
   <SubmenuTriggerPrimitive {...props} delay={delay}>
     {props.children}
   </SubmenuTriggerPrimitive>
@@ -84,17 +86,7 @@ const MenuTrigger = ({ className, ref, ...props }: MenuTriggerProps) => (
 )
 
 interface MenuContentProps<T>
-  extends Pick<
-      PopoverProps,
-      | "placement"
-      | "offset"
-      | "crossOffset"
-      | "arrowBoundaryOffset"
-      | "triggerRef"
-      | "isOpen"
-      | "onOpenChange"
-      | "shouldFlip"
-    >,
+  extends Omit<PopoverProps, "children" | "style">,
     MenuPrimitiveProps<T> {
   className?: string
   popoverClassName?: string
@@ -110,23 +102,16 @@ const MenuContent = <T extends object>({
 }: MenuContentProps<T>) => {
   const { respectScreen } = use(MenuContext)
   return (
-    <PopoverContent
-      isOpen={props.isOpen}
-      onOpenChange={props.onOpenChange}
-      shouldFlip={props.shouldFlip}
+    <Popover.Content
       respectScreen={respectScreen}
       showArrow={showArrow}
-      offset={props.offset}
-      placement={props.placement}
-      crossOffset={props.crossOffset}
-      triggerRef={props.triggerRef}
-      arrowBoundaryOffset={props.arrowBoundaryOffset}
       className={popover({
         className: popoverClassName,
       })}
+      {...props}
     >
       <MenuPrimitive className={menu({ className })} {...props} />
-    </PopoverContent>
+    </Popover.Content>
   )
 }
 
@@ -134,16 +119,16 @@ interface MenuItemProps extends MenuItemPrimitiveProps, VariantProps<typeof drop
   isDanger?: boolean
 }
 
-const MenuItem = ({ className, isDanger = false, children, ...props }: MenuItemProps) => {
+const Item = ({ className, isDanger = false, children, ...props }: MenuItemProps) => {
   const textValue = props.textValue || (typeof children === "string" ? children : undefined)
   return (
-    <MenuItemPrimitive
+    <MenuItem
       className={composeRenderProps(className, (className, renderProps) =>
         dropdownItemStyles({
           ...renderProps,
           className: renderProps.hasSubmenu
             ? cn([
-                "data-open:data-danger:bg-danger/10 data-open:data-danger:text-danger",
+                "data-open:data-danger:bg-danger/20 data-open:data-danger:text-danger",
                 "data-open:bg-accent data-open:text-accent-fg data-open:*:data-[slot=icon]:text-accent-fg data-open:*:[.text-muted-fg]:text-accent-fg",
                 className,
               ])
@@ -179,7 +164,7 @@ const MenuItem = ({ className, isDanger = false, children, ...props }: MenuItemP
           )}
         </>
       )}
-    </MenuItemPrimitive>
+    </MenuItem>
   )
 }
 
@@ -205,30 +190,26 @@ interface MenuSectionProps<T> extends MenuSectionPrimitiveProps<T> {
   title?: string
 }
 
-const MenuSection = <T extends object>({ className, ref, ...props }: MenuSectionProps<T>) => {
+const Section = <T extends object>({ className, ref, ...props }: MenuSectionProps<T>) => {
   return (
-    <MenuSectionPrimitive ref={ref} className={section({ className })} {...props}>
+    <MenuSection ref={ref} className={section({ className })} {...props}>
       {"title" in props && <Header className={header()}>{props.title}</Header>}
       <Collection items={props.items}>{props.children}</Collection>
-    </MenuSectionPrimitive>
+    </MenuSection>
   )
 }
 
-const MenuSeparator = DropdownSeparator
-const MenuItemDetails = DropdownItemDetails
-const MenuKeyboard = DropdownKeyboard
-const MenuLabel = DropdownLabel
-
-Menu.Keyboard = MenuKeyboard
+Menu.Keyboard = DropdownKeyboard
+Menu.Primitive = MenuPrimitive
 Menu.Content = MenuContent
 Menu.Header = MenuHeader
-Menu.Item = MenuItem
-Menu.Section = MenuSection
-Menu.Separator = MenuSeparator
-Menu.ItemDetails = MenuItemDetails
-Menu.Label = MenuLabel
+Menu.Item = Item
+Menu.Section = Section
+Menu.Separator = DropdownSeparator
 Menu.Trigger = MenuTrigger
-Menu.Submenu = MenuSubMenu
+Menu.ItemDetails = DropdownItemDetails
+Menu.Submenu = SubMenu
+Menu.Label = DropdownLabel
 
 export type { MenuProps, MenuContentProps, MenuTriggerProps, MenuItemProps, MenuSectionProps }
 export { Menu }

@@ -1,3 +1,5 @@
+"use client"
+
 import {
   IconChevronsUpDown,
   IconDashboard,
@@ -11,6 +13,7 @@ import {
   IconShoppingBag,
   IconTruck,
 } from "justd-icons"
+// import { usePathname } from "next/navigation"
 import { usePage } from "@inertiajs/react"
 
 import { useEffect } from "react"
@@ -28,8 +31,11 @@ import {
   SidebarSectionGroup,
   useSidebar,
 } from "ui"
+import { PagePropsData } from '@/types';
 
-export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  const { auth } = usePage<PagePropsData>().props;
+
   const { setIsOpenOnMobile } = useSidebar()
   const pathname = usePage().url
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -45,7 +51,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             aria-label="Profile"
           >
             <span className="flex flex-col">
-              <span>Personal</span>
+              <span>{auth.user.name}</span>
               <span className="text-muted-fg text-xs">Personal workspace</span>
             </span>
             <IconChevronsUpDown />
@@ -57,7 +63,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             className="sm:min-w-(--trigger-width)"
           >
             <Menu.Item id="personal">
-              <Menu.Label>Personal</Menu.Label>
+              <Menu.Label>{auth.user.name}</Menu.Label>
             </Menu.Item>
             <Menu.Item id="acme">
               <Menu.Label>Acme Inc.</Menu.Label>
@@ -144,16 +150,30 @@ export const mainNavigations: NavigationGroupProps[] = [
     icon: IconDashboard,
     children: [
       { name: "Overview", path: "/", icon: IconDashboard },
-      { name: "Orders", path: "/orders", icon: IconShoppingBag },
-      { name: "Products", path: "/products", icon: IconPackage },
-
-      { name: "Sales Analytics", path: "/analytics" },
-      { name: "Recent Activities", path: "/activities" },
+      { name: "Dashboard", path: "/dashboard", icon: IconShoppingBag },
+      { name: "Data Mahasiswa", path: "/mahasiswa", icon: IconShoppingBag },
+      { name: "Data Dosen", path: "/dosen", icon: IconShoppingBag },
+      { name: "Roster Perkuliahan", path: "/roster", icon: IconShoppingBag },
+      { name: "Kerja Praktik / PKL", path: "/pkl", icon: IconShoppingBag },
+      { name: "Data SKPI", path: "/skpi", icon: IconShoppingBag },
+      { name: "Data SKPI", path: "/skpi", icon: IconShoppingBag },
     ],
   },
 ]
 
 export const navigations: NavigationGroupProps[] = [
+  {
+    title: "Tugas Akhir / Skripsi",
+    path: "tugas-akhir",
+    icon: IconSettings,
+    children: [
+      { name: "Pengajuan Judul", path: "/tugas-akhir/pengajuan-judul", icon: IconPeople },
+      { name: "Daftar Seminar Proposal", path: "/tugas-akhir/seminar-proposal" },
+      { name: "Daftar Seminar Hasil", path: "/tugas-akhir/seminar-hasil" },
+      { name: "Daftar Sidang", path: "/tugas-akhir/sidang" },
+      { name: "Bimbingan Skripsi", path: "/tugas-akhir/bimbinganc" },
+    ],
+  },
   {
     title: "Management",
     path: "management",
@@ -173,6 +193,11 @@ export const navigations: NavigationGroupProps[] = [
       { name: "Shipping", path: "/more/shipping", icon: IconTruck },
       { name: "Affiliates", path: "/more/affiliates" },
       { name: "Taxes", path: "/more/taxes" },
+      { name: "Orders", path: "/orders", icon: IconShoppingBag },
+      { name: "Products", path: "/products", icon: IconPackage },
+      { name: "Organizations", path: "/organizations", icon: IconPackage },
+      { name: "Sales Analytics", path: "/analytics" },
+      { name: "Recent Activities", path: "/activities" },
     ],
   },
 ]

@@ -1,3 +1,5 @@
+"use client"
+
 import type { GridListItemProps, GridListProps } from "react-aria-components"
 import { GridList, GridListItem, composeRenderProps } from "react-aria-components"
 import type { VariantProps } from "tailwind-variants"
@@ -74,13 +76,13 @@ const choiceboxItemStyles = tv({
     "dark:[--choicebox-selected-hovered:color-mix(in_oklab,var(--color-primary)_25%,black_75%)]",
     "dark:[--choicebox-fg:color-mix(in_oklab,var(--color-primary)_45%,white_55%)] dark:[--choicebox:color-mix(in_oklab,var(--color-primary)_20%,black_70%)]",
     "inset-ring inset-ring-border cursor-pointer rounded-lg p-4 [&_[slot=title]]:font-medium",
-    "**:data-[slot=choicebox-icon]:size-5 **:data-[slot=choicebox-icon]:shrink-0 **:data-[slot=choicebox-icon]:text-current/60 selected:**:data-[slot=choicebox-icon]:text-current/90",
+    "data-selected:**:data-[slot=choicebox-icon]:text-current/90 **:data-[slot=choicebox-icon]:size-5 **:data-[slot=choicebox-icon]:shrink-0 **:data-[slot=choicebox-icon]:text-current/60",
   ],
   variants: {
     init: {
       true: [
         "bg-(--choicebox) text-(--choicebox-fg)",
-        "inset-ring-ring/70 z-20 hover:bg-(--choicebox-selected-hovered)",
+        "inset-ring-ring/70 z-20 data-hovered:bg-(--choicebox-selected-hovered)",
         "[&_[slot=title]]:text-(--choicebox-fg)",
         "[&_[slot=description]]:text-(--choicebox-fg)",
       ],

@@ -30,7 +30,7 @@ interface AvatarProps extends VariantProps<typeof avatar> {
 const Avatar = ({
   src = null,
   shape = "circle",
-  size="medium",
+  size = "medium",
   initials,
   alt = "",
   className,

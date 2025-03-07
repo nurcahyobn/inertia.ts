@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/utils/classes"
 import { IconChevronLgRight } from "justd-icons"
 import { createContext, use } from "react"

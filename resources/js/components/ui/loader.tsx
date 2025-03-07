@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/utils/classes"
 import { IconLoader } from "justd-icons"
 import { ProgressBar } from "react-aria-components"

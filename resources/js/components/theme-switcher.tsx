@@ -1,22 +1,38 @@
-import { Button } from "@/components/ui"
-import { useTheme } from "@/providers/theme-provider"
-import { IconMoon, IconSun } from "justd-icons"
+import { IconChevronLgDown, IconDeviceDesktop2, IconMoon, IconSun } from "justd-icons"
+import { Button, Menu } from "ui"
+import { useTheme } from "@/utils/use-theme"
 
-interface Props {
-  appearance?: "plain" | "outline"
-}
+export function ThemeSwitcher({
+  shape = "square",
+  intent = "plain",
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { theme, updateTheme } = useTheme()
 
-export function ThemeSwitcher({ appearance = "plain" }: Props) {
-  const { theme, setTheme } = useTheme()
   return (
-    <Button
-      intent={appearance}
-      size="sq-md"
-      aria-label="Switch theme"
-      onPress={() => setTheme(theme === "light" ? "dark" : "light")}
-    >
-      <IconSun className="transition-all scale-100 rotate-0 dark:scale-0 dark:-rotate-90 h-[1.2rem] w-[1.2rem]" />
-      <IconMoon className="absolute transition-all scale-0 rotate-90 dark:scale-100 dark:rotate-0 h-[1.2rem] w-[1.2rem]" />
-    </Button>
+    <Menu>
+      <Button size="sm" className="group" intent={intent}>
+        {theme === "dark" && <IconMoon />}
+        {theme === "light" && <IconSun />}
+        {theme === "system" && <IconDeviceDesktop2 />}
+        Theme
+        <IconChevronLgDown className="duration-200 group-data-pressed:rotate-180" />
+      </Button>
+      <Menu.Content placement="bottom end">
+        <Menu.Item onAction={() => updateTheme("light")}>
+          <IconSun />
+          <Menu.Label>Light</Menu.Label>
+        </Menu.Item>
+        <Menu.Item onAction={() => updateTheme("dark")}>
+          <IconMoon />
+          <Menu.Label>Dark</Menu.Label>
+        </Menu.Item>
+        <Menu.Item onAction={() => updateTheme("system")}>
+          <IconDeviceDesktop2 />
+          <Menu.Label>System</Menu.Label>
+        </Menu.Item>
+      </Menu.Content>
+    </Menu>
   )
 }
