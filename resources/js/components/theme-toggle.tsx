@@ -1,7 +1,7 @@
 "use client"
 
 import { useTheme } from "@/providers/theme-provider"
-// import { useTheme } from "@/components/theme-provider"
+// import { useTheme } from "@/providers/theme-provider"
 import { IconMoon, IconSun } from "justd-icons"
 import { Button } from "ui"
 

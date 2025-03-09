@@ -507,10 +507,11 @@ const ChartLegendContent = ({
   nameKey,
   ref,
 }: ToggleGroupProps &
-  Pick<LegendProps, "payload" | "align" | "verticalAlign"> & {
+  LegendProps & {
     className?: string
     hideIcon?: boolean
     nameKey?: string
+    payload?: any[]
   }) => {
   const { config, selectedLegend, onLegendSelect } = useChart()
 

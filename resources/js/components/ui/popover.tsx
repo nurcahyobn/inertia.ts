@@ -1,12 +1,12 @@
 "use client"
 
 import type {
+  DialogProps,
   DialogTriggerProps,
   ModalOverlayProps,
   PopoverProps as PopoverPrimitiveProps,
 } from "react-aria-components"
 import {
-  type DialogProps,
   DialogTrigger,
   Modal,
   ModalOverlay,
@@ -34,22 +34,22 @@ const Popover = (props: PopoverProps) => {
   return <DialogTrigger {...props} />
 }
 
-const Title = ({ level = 2, className, ...props }: DialogTitleProps) => (
+const PopoverTitle = ({ level = 2, className, ...props }: DialogTitleProps) => (
   <Dialog.Title
     className={twMerge("sm:leading-none", level === 2 && "sm:text-lg", className)}
     {...props}
   />
 )
 
-const Header = ({ className, ...props }: DialogHeaderProps) => (
+const PopoverHeader = ({ className, ...props }: DialogHeaderProps) => (
   <Dialog.Header className={twMerge("sm:p-4", className)} {...props} />
 )
 
-const Footer = ({ className, ...props }: DialogFooterProps) => (
+const PopoverFooter = ({ className, ...props }: DialogFooterProps) => (
   <Dialog.Footer className={cn("sm:p-4", className)} {...props} />
 )
 
-const Body = ({ className, ref, ...props }: DialogBodyProps) => (
+const PopoverBody = ({ className, ref, ...props }: DialogBodyProps) => (
   <Dialog.Body ref={ref} className={cn("sm:px-4 sm:pt-0", className)} {...props} />
 )
 
@@ -63,7 +63,7 @@ const content = tv({
       false: "min-w-80",
     },
     isMenu: {
-      true: "p-0",
+      true: "",
     },
     isEntering: {
       true: [
@@ -104,15 +104,13 @@ const drawer = tv({
 })
 
 interface PopoverContentProps
-  extends Omit<React.ComponentProps<typeof Modal>, "children">,
-    Omit<PopoverPrimitiveProps, "children" | "className">,
-    Omit<ModalOverlayProps, "className"> {
+  extends Omit<PopoverPrimitiveProps, "children" | "className">,
+    Omit<ModalOverlayProps, "className">,
+    Pick<DialogProps, "aria-label" | "aria-labelledby"> {
   children: React.ReactNode
   showArrow?: boolean
   style?: React.CSSProperties
   respectScreen?: boolean
-  "aria-label"?: DialogProps["aria-label"]
-  "aria-labelledby"?: DialogProps["aria-labelledby"]
   className?: string | ((values: { defaultClassName?: string }) => string)
 }
 
@@ -128,6 +126,7 @@ const PopoverContent = ({
   const isMenuTrigger = popoverContext?.trigger === "MenuTrigger"
   const isSubmenuTrigger = popoverContext?.trigger === "SubmenuTrigger"
   const isMenu = isMenuTrigger || isSubmenuTrigger
+  const isComboBoxTrigger = popoverContext?.trigger === "ComboBox"
   const offset = showArrow ? 12 : 8
   const effectiveOffset = isSubmenuTrigger ? offset - 5 : offset
   return isMobile && respectScreen ? (
@@ -141,11 +140,7 @@ const PopoverContent = ({
           drawer({ ...renderProps, isMenu, className }),
         )}
       >
-        <Dialog
-          role="dialog"
-          aria-label={props["aria-label"] || isMenu ? "Menu" : undefined}
-          className="outline-hidden"
-        >
+        <Dialog role="dialog" aria-label={props["aria-label"] ?? "List item"}>
           {children}
         </Dialog>
       </Modal>
@@ -153,13 +148,13 @@ const PopoverContent = ({
   ) : (
     <PopoverPrimitive
       offset={effectiveOffset}
-      {...props}
       className={composeRenderProps(className, (className, renderProps) =>
         content({
           ...renderProps,
           className,
         }),
       )}
+      {...props}
     >
       {showArrow && (
         <OverlayArrow className="group">
@@ -173,44 +168,29 @@ const PopoverContent = ({
           </svg>
         </OverlayArrow>
       )}
-      <Dialog
-        role="dialog"
-        aria-label={props["aria-label"] || isMenu ? "Menu" : undefined}
-        className="outline-hidden"
-      >
-        {children}
-      </Dialog>
-    </PopoverPrimitive>
-  )
-}
-
-const Picker = ({ children, className, ...props }: PopoverContentProps) => {
-  return (
-    <PopoverPrimitive
-      {...props}
-      className={composeRenderProps(className, (className, renderProps) =>
-        content({
-          ...renderProps,
-          isPicker: true,
-          className,
-        }),
+      {!isComboBoxTrigger ? (
+        <Dialog role="dialog" aria-label={props["aria-label"] ?? "List item"}>
+          {children}
+        </Dialog>
+      ) : (
+        children
       )}
-    >
-      {children}
     </PopoverPrimitive>
   )
 }
 
-Popover.Primitive = PopoverPrimitive
-Popover.Trigger = Dialog.Trigger
-Popover.Close = Dialog.Close
+const PopoverTrigger = Dialog.Trigger
+const PopoverClose = Dialog.Close
+const PopoverDescription = Dialog.Description
+
+Popover.Trigger = PopoverTrigger
+Popover.Close = PopoverClose
+Popover.Description = PopoverDescription
 Popover.Content = PopoverContent
-Popover.Description = Dialog.Description
-Popover.Body = Body
-Popover.Footer = Footer
-Popover.Header = Header
-Popover.Picker = Picker
-Popover.Title = Title
+Popover.Body = PopoverBody
+Popover.Footer = PopoverFooter
+Popover.Header = PopoverHeader
+Popover.Title = PopoverTitle
 
 export type { PopoverProps, PopoverContentProps }
-export { Popover }
+export { Popover, PopoverContent }
